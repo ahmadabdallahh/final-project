@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "name": "Laptop Pro X1",
+    "slug": "laptop-pro-x1",
+    "description": "High-performance laptop with Intel i7 processor, 16GB RAM, and 512GB SSD. Perfect for professionals.",
+    "price": 1299.99,
+    "stock": 15,
+    "category_id": 1,
+    "image": "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 2,
+    "name": "Wireless Headphones",
+    "slug": "wireless-headphones",
+    "description": "Premium noise-canceling wireless headphones with 30-hour battery life.",
+    "price": 249.99,
+    "stock": 25,
+    "category_id": 1,
+    "image": "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 3,
+    "name": "Smart Watch Series 5",
+    "slug": "smart-watch-series-5",
+    "description": "Advanced fitness tracking, heart rate monitor, and GPS. Water-resistant design.",
+    "price": 399.99,
+    "stock": 30,
+    "category_id": 1,
+    "image": "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 4,
+    "name": "Running Shoes Elite",
+    "slug": "running-shoes-elite",
+    "description": "Lightweight running shoes with advanced cushioning technology for maximum comfort.",
+    "price": 129.99,
+    "stock": 50,
+    "category_id": 2,
+    "image": "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 5,
+    "name": "Denim Jacket Classic",
+    "slug": "denim-jacket-classic",
+    "description": "Timeless denim jacket with modern fit. Durable and stylish for any occasion.",
+    "price": 89.99,
+    "stock": 20,
+    "category_id": 2,
+    "image": "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 6,
+    "name": "Coffee Maker Deluxe",
+    "slug": "coffee-maker-deluxe",
+    "description": "Programmable coffee maker with thermal carafe. Brews up to 12 cups.",
+    "price": 79.99,
+    "stock": 18,
+    "category_id": 3,
+    "image": "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 7,
+    "name": "Yoga Mat Premium",
+    "slug": "yoga-mat-premium",
+    "description": "Extra-thick yoga mat with non-slip surface. Includes carrying strap.",
+    "price": 45.99,
+    "stock": 40,
+    "category_id": 4,
+    "image": "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 8,
+    "name": "Desk Lamp LED",
+    "slug": "desk-lamp-led",
+    "description": "Adjustable LED desk lamp with multiple brightness levels and color temperatures.",
+    "price": 34.99,
+    "stock": 35,
+    "category_id": 5,
+    "image": "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 9,
+    "name": "Bluetooth Speaker",
+    "slug": "bluetooth-speaker",
+    "description": "Portable waterproof Bluetooth speaker with 360-degree sound and 20-hour battery.",
+    "price": 59.99,
+    "stock": 28,
+    "category_id": 1,
+    "image": "https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 10,
+    "name": "Backpack Business",
+    "slug": "backpack-business",
+    "description": "Professional laptop backpack with multiple compartments and USB charging port.",
+    "price": 69.99,
+    "stock": 22,
+    "category_id": 2,
+    "image": "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 11,
+    "name": "Sneakers Casual",
+    "slug": "sneakers-casual",
+    "description": "Comfortable everyday sneakers with breathable mesh upper and cushioned sole.",
+    "price": 79.99,
+    "stock": 45,
+    "category_id": 2,
+    "image": "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "id": 12,
+    "name": "Tablet 10 inch",
+    "slug": "tablet-10-inch",
+    "description": "10-inch tablet with HD display, perfect for reading, browsing, and streaming.",
+    "price": 299.99,
+    "stock": 12,
+    "category_id": 1,
+    "image": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500&auto=format&fit=crop&q=60"
+  }
+]

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { CartProvider } from './context/CartContext';
 import { ThemeProvider } from './context/ThemeContext';
+import { AuthProvider } from './context/AuthContext';
 import ProductList from './pages/ProductList';
 import ProductDetail from './pages/ProductDetail';
 import Cart from './pages/Cart';
@@ -18,36 +19,40 @@ function ProtectedRoute({ children }) {
 
 function App() {
     return (
-        <ThemeProvider>
-            <CartProvider>
-                <BrowserRouter>
-                    <Layout>
-                        <Routes>
-                            {/* Public Routes */}
-                            <Route path="/" element={<ProductList />} />
-                            <Route path="/product/:slug" element={<ProductDetail />} />
-                            <Route path="/cart" element={<Cart />} />
-                            <Route path="/about" element={<AboutUs />} />
-                            <Route path="/contact" element={<ContactUs />} />
+        <AuthProvider>
+            <ThemeProvider>
+                <CartProvider>
+                    <BrowserRouter>
+                        <Layout>
+                            <Routes>
+                                {/* Public Routes */}
+                                <Route path="/" element={<ProductList />} />
+                                <Route path="/product/:slug" element={<ProductDetail />} />
+                                <Route path="/cart" element={<Cart />} />
+                                <Route path="/about" element={<AboutUs />} />
+                                <Route path="/contact" element={<ContactUs />} />
 
-                            {/* Admin Routes */}
-                            <Route path="/admin/login" element={<AdminLogin />} />
-                            <Route
-                                path="/admin"
-                                element={
-                                    <ProtectedRoute>
-                                        <AdminDashboard />
-                                    </ProtectedRoute>
-                                }
-                            />
+                                {/* Auth Routes */}
+                                <Route path="/admin/login" element={<AdminLogin />} />
 
-                            {/* Fallback */}
-                            <Route path="*" element={<Navigate to="/" />} />
-                        </Routes>
-                    </Layout>
-                </BrowserRouter>
-            </CartProvider>
-        </ThemeProvider>
+                                {/* Admin Routes */}
+                                <Route
+                                    path="/admin"
+                                    element={
+                                        <ProtectedRoute>
+                                            <AdminDashboard />
+                                        </ProtectedRoute>
+                                    }
+                                />
+
+                                {/* Fallback */}
+                                <Route path="*" element={<Navigate to="/" />} />
+                            </Routes>
+                        </Layout>
+                    </BrowserRouter>
+                </CartProvider>
+            </ThemeProvider>
+        </AuthProvider>
     );
 }
 

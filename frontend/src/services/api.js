@@ -1,44 +1,85 @@
-import axios from 'axios';
+import { localData } from './localData';
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
-
-const api = axios.create({
-    baseURL: API_URL,
-    headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-    },
-    withCredentials: true,
-});
-
-// Add token to requests if available
-api.interceptors.request.use((config) => {
-    const token = localStorage.getItem('admin_token');
-    if (token) {
-        config.headers.Authorization = `Bearer ${token}`;
+const mockResponse = (data) => ({
+    data: {
+        data: data,
+        meta: { total: Array.isArray(data) ? data.length : 1 }
     }
-    return config;
 });
 
-// Products API
+const mockError = (message) => {
+    throw { response: { data: { message } } };
+};
+
 export const productApi = {
-    getAll: (params = {}) => api.get('/products', { params }),
-    getBySlug: (slug) => api.get(`/products/${slug}`),
-    create: (data) => api.post('/products', data),
-    update: (id, data) => api.put(`/products/${id}`, data),
-    delete: (id) => api.delete(`/products/${id}`),
+    getAll: (params = {}) => {
+        const products = localData.searchProducts(params.search || '', params.category || '');
+        return Promise.resolve(mockResponse(products));
+    },
+    getBySlug: (slug) => {
+        const product = localData.getProductBySlug(slug);
+        if (!product) return Promise.reject(mockError('Product not found'));
+        return Promise.resolve(mockResponse(product));
+    },
+    create: (data) => {
+        const product = localData.addProduct(data);
+        return Promise.resolve(mockResponse(product));
+    },
+    update: (id, data) => {
+        const product = localData.updateProduct(id, data);
+        if (!product) return Promise.reject(mockError('Product not found'));
+        return Promise.resolve(mockResponse(product));
+    },
+    delete: (id) => {
+        localData.deleteProduct(id);
+        return Promise.resolve(mockResponse({ success: true }));
+    },
 };
 
-// Categories API
 export const categoryApi = {
-    getAll: () => api.get('/categories'),
-    getBySlug: (slug) => api.get(`/categories/${slug}`),
+    getAll: () => {
+        const categories = localData.getCategories();
+        return Promise.resolve(mockResponse(categories));
+    },
+    getBySlug: (slug) => {
+        const category = localData.getCategoryBySlug(slug);
+        if (!category) return Promise.reject(mockError('Category not found'));
+        return Promise.resolve(mockResponse(category));
+    },
 };
 
-// Auth API
 export const authApi = {
-    login: (credentials) => api.post('/login', credentials),
-    logout: () => api.post('/logout'),
+    login: (credentials) => {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const user = users.find(u => u.email === credentials.email && u.password === credentials.password);
+
+                if (user) {
+                    const token = `local_token_${Date.now()}`;
+                    const userData = {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role
+                    };
+                    resolve({
+                        data: {
+                            token,
+                            user: userData
+                        }
+                    });
+                } else {
+                    reject({ response: { data: { message: 'Invalid credentials' } } });
+                }
+            }, 300);
+        });
+    },
+    logout: () => Promise.resolve({ data: { success: true } }),
 };
 
-export default api;
+export default {
+    productApi,
+    categoryApi,
+    authApi
+};
