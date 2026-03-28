@@ -1,0 +1,17 @@
+{
+    "version": 2,
+    "functions": {
+        "app.js": {
+            "maxDuration": 30
+        }
+    },
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "app.js"
+        }
+    ],
+    "env": {
+        "NODE_ENV": "production"
+    }
+}

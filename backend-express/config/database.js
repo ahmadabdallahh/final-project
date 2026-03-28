@@ -4,7 +4,7 @@ import { URL } from 'url';
 
 dotenv.config();
 
-// Parse MYSQL_URL from Railway reference variable
+// Parse MYSQL_URL from Vercel environment variable
 function parseMySqlUrl(mysqlUrl) {
     if (!mysqlUrl) return null;
 
@@ -23,16 +23,26 @@ function parseMySqlUrl(mysqlUrl) {
     }
 }
 
-// Use Railway reference variable for MySQL connection
+// Use Vercel environment variables for MySQL connection
 let dbConfig;
 
 if (process.env.MYSQL_URL) {
-    // Parse MYSQL_URL from Railway reference variable
+    // Parse MYSQL_URL from Vercel environment variable
     dbConfig = parseMySqlUrl(process.env.MYSQL_URL);
     if (!dbConfig) {
         throw new Error('Invalid MYSQL_URL format');
     }
-    console.log('🔗 Using MYSQL_URL from Railway reference variable');
+    console.log('🔗 Using MYSQL_URL from Vercel environment variable');
+} else if (process.env.DB_HOST && process.env.DB_HOST !== 'your-mysql-host.com') {
+    // Use individual database variables
+    dbConfig = {
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT || 3306,
+        database: process.env.DB_NAME,
+        username: process.env.DB_USER,
+        password: process.env.DB_PASSWORD
+    };
+    console.log('🔧 Using individual database variables from Vercel');
 } else {
     // Fallback for local development
     dbConfig = {
@@ -42,10 +52,10 @@ if (process.env.MYSQL_URL) {
         username: process.env.DB_USER || 'root',
         password: process.env.DB_PASSWORD || ''
     };
-    console.log('🔧 Using local database configuration');
+    console.log('🏠 Using local database configuration');
 }
 
-// Railway MySQL configuration
+// Vercel MySQL configuration
 const sequelize = new Sequelize(
     dbConfig.database,
     dbConfig.username,
@@ -56,8 +66,8 @@ const sequelize = new Sequelize(
         dialect: 'mysql',
         logging: process.env.NODE_ENV === 'development' ? console.log : false,
         dialectOptions: {
-            // SSL configuration based on host
-            ssl: dbConfig.host && (dbConfig.host.includes('railway') || dbConfig.host.includes('containers-')) ? {
+            // SSL configuration for external databases (required by most cloud providers)
+            ssl: dbConfig.host && !dbConfig.host.includes('localhost') ? {
                 require: true,
                 rejectUnauthorized: false
             } : false,
