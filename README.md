@@ -386,11 +386,4 @@ For issues and questions:
   - Mobile-responsive design
   - Real-time search and filtering
 
-- **v1.0.0** - Initial Laravel & React Setup
-  - Basic Laravel backend API
-  - React frontend with basic functionality
-  - Product management
-  - Shopping cart
-  - Admin authentication
-
 ---
