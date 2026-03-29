@@ -1,6 +1,6 @@
-# E-Commerce Project (Laravel & React)
+# E-Commerce Project (React Frontend)
 
-A full-stack e-commerce application with Laravel backend API and React frontend, featuring product management, shopping cart, and admin dashboard.
+A modern e-commerce frontend application built with React, featuring product management, shopping cart, user authentication, and admin dashboard with local data storage.
 
 ---
 
@@ -8,56 +8,40 @@ A full-stack e-commerce application with Laravel backend API and React frontend,
 
 ```
 finial project (laravel & react)/
-├── backend/                 # Laravel API
-│   ├── app/
-│   │   ├── Http/Controllers/API/
-│   │   │   ├── AuthController.php
-│   │   │   ├── CategoryController.php
-│   │   │   └── ProductController.php
-│   │   ├── Http/Requests/
-│   │   │   ├── StoreProductRequest.php
-│   │   │   └── UpdateProductRequest.php
-│   │   ├── Http/Resources/
-│   │   │   ├── CategoryResource.php
-│   │   │   └── ProductResource.php
-│   │   └── Models/
-│   │       ├── Category.php
-│   │       ├── Product.php
-│   │       └── User.php
-│   ├── database/
-│   │   ├── migrations/
-│   │   │   ├── 2024_01_01_000001_create_categories_table.php
-│   │   │   ├── 2024_01_01_000002_create_products_table.php
-│   │   │   └── 2024_01_01_000003_add_is_admin_to_users_table.php
-│   │   └── seeders/
-│   │       ├── AdminSeeder.php
-│   │       └── SampleDataSeeder.php
-│   ├── routes/
-│   │   ├── api.php
-│   │   ├── web.php
-│   │   └── console.php
-│   └── config/
-│       └── cors.php
-└── frontend/               # React SPA
-    ├── src/
-    │   ├── components/
-    │   │   └── Layout.jsx
-    │   ├── context/
-    │   │   └── CartContext.jsx
-    │   ├── pages/
-    │   │   ├── ProductList.jsx
-    │   │   ├── ProductDetail.jsx
-    │   │   ├── Cart.jsx
-    │   │   ├── AdminLogin.jsx
-    │   │   └── AdminDashboard.jsx
-    │   ├── services/
-    │   │   └── api.js
-    │   ├── App.jsx
-    │   └── main.jsx
-    ├── package.json
-    ├── tailwind.config.js
-    ├── postcss.config.js
-    └── vite.config.js
+├── frontend/               # React SPA
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Layout.jsx    # Main layout with navbar and footer
+│   │   │   └── Toast.jsx     # Toast notification system
+│   │   ├── context/
+│   │   │   ├── AuthContext.jsx    # User authentication context
+│   │   │   ├── CartContext.jsx    # Shopping cart state management
+│   │   │   └── ThemeContext.jsx   # Dark mode theme management
+│   │   ├── pages/
+│   │   │   ├── ProductList.jsx    # Homepage with product grid
+│   │   │   ├── ProductDetail.jsx  # Single product view
+│   │   │   ├── Cart.jsx           # Shopping cart page
+│   │   │   ├── AdminLogin.jsx     # Admin authentication
+│   │   │   ├── AdminDashboard.jsx # Admin CRUD panel
+│   │   │   ├── Register.jsx       # User registration
+│   │   │   ├── AboutUs.jsx        # About page
+│   │   │   └── ContactUs.jsx      # Contact page with form
+│   │   ├── services/
+│   │   │   ├── api.js             # API service layer with mock responses
+│   │   │   └── localData.js       # Local storage data management
+│   │   ├── data/
+│   │   │   ├── products.json      # Initial product data
+│   │   │   ├── categories.json    # Initial category data
+│   │   │   └── initialUsers.json  # Initial user data
+│   │   ├── App.jsx                # Main routing and layout
+│   │   ├── main.jsx               # Application entry point
+│   │   └── index.css              # Global styles
+│   ├── package.json
+│   ├── tailwind.config.js
+│   ├── postcss.config.js
+│   └── vite.config.js
+├── README.md                      # This file
+└── Technical Documentation.docx   # Project documentation
 ```
 
 ---
@@ -65,112 +49,126 @@ finial project (laravel & react)/
 ## 🚀 Features
 
 ### Customer Features
-- **Product Browsing** - View all products with pagination
-- **Product Search** - Search products by name
-- **Category Filtering** - Filter products by category
-- **Product Details** - Detailed product view with images
-- **Shopping Cart** - Add/remove items, update quantities
-- **Responsive Design** - Mobile-friendly UI with Tailwind CSS
+- **Product Browsing** - View all products with responsive grid layout
+- **Product Search** - Real-time search by product name and description
+- **Category Filtering** - Filter products by category with dynamic counts
+- **Product Details** - Detailed product view with images and specifications
+- **Shopping Cart** - Add/remove items, update quantities with localStorage persistence
+- **User Registration** - Create customer accounts with secure validation
+- **Dark Mode** - Toggle between light and dark themes with system preference detection
+- **Responsive Design** - Mobile-first approach with Tailwind CSS
+- **Contact Form** - Reach out to support with validation and feedback
+- **About Page** - Company information and values
 
 ### Admin Features
-- **Secure Authentication** - Laravel Sanctum token-based auth
-- **Product CRUD** - Create, read, update, delete products
-- **Category Management** - View categories and product counts
+- **Secure Authentication** - Local token-based authentication system
+- **User Registration** - Admin account creation with role management
+- **Product CRUD** - Create, read, update, delete products with image support
+- **Category Management** - View categories with real-time product counts
 - **Protected Routes** - Admin-only access to management features
+- **Toast Notifications** - Real-time feedback for user actions
 
 ---
 
-## 🗄️ Database Schema
+## 🗄️ Data Storage
 
-### Categories Table
-```sql
-- id (bigint, primary)
-- name (string)
-- slug (string, unique)
-- created_at, updated_at (timestamps)
+### Local Storage Structure
+
+**Categories Data**
+```json
+{
+  "id": 1,
+  "name": "Electronics",
+  "slug": "electronics",
+  "products_count": 15,
+  "created_at": "2024-01-01T00:00:00Z",
+  "updated_at": "2024-01-01T00:00:00Z"
+}
 ```
 
-### Products Table
-```sql
-- id (bigint, primary)
-- name (string)
-- slug (string, unique)
-- description (text, nullable)
-- price (decimal 10,2)
-- stock (integer)
-- image (string, nullable)
-- category_id (bigint, foreign key)
-- created_at, updated_at (timestamps)
+**Products Data**
+```json
+{
+  "id": 1,
+  "name": "Wireless Headphones",
+  "slug": "wireless-headphones",
+  "description": "High-quality wireless headphones with noise cancellation",
+  "price": 199.99,
+  "stock": 50,
+  "image": "https://example.com/image.jpg",
+  "category_id": 1,
+  "created_at": "2024-01-01T00:00:00Z",
+  "updated_at": "2024-01-01T00:00:00Z"
+}
 ```
 
-### Users Table
-```sql
-- id (bigint, primary)
-- name (string)
-- email (string, unique)
-- password (string, hashed)
-- is_admin (boolean, default false)
-- created_at, updated_at (timestamps)
+**Users Data**
+```json
+{
+  "id": 1,
+  "name": "Admin User",
+  "email": "admin@example.com",
+  "password": "hashed_password",
+  "role": "admin",
+  "createdAt": "2024-01-01T00:00:00Z"
+}
 ```
 
 ---
 
-## 🔌 API Endpoints
+## 🔌 Service Layer
 
-### Public Routes
-| Method | Endpoint | Description |
-|---------|-----------|-------------|
-| GET | `/api/products` | List all products (paginated) |
-| GET | `/api/products/{slug}` | Get single product |
-| GET | `/api/categories` | List all categories |
-| GET | `/api/categories/{slug}` | Get category with products |
+### API Services (Mock Implementation)
 
-**Query Parameters:**
-- `?search={term}` - Search products by name
-- `?category={slug}` - Filter by category
+**Product Service**
+| Method | Description | Returns |
+|---------|-------------|---------|
+| `getAll(params)` | List all products with search/filter | Promise<Product[]> |
+| `getBySlug(slug)` | Get single product by slug | Promise<Product> |
+| `create(data)` | Create new product (admin) | Promise<Product> |
+| `update(id, data)` | Update existing product (admin) | Promise<Product> |
+| `delete(id)` | Delete product (admin) | Promise<void> |
 
-### Admin Routes (Protected)
-| Method | Endpoint | Description |
-|---------|-----------|-------------|
-| POST | `/api/login` | Admin authentication |
-| POST | `/api/logout` | Logout (requires token) |
-| POST | `/api/products` | Create new product |
-| PUT | `/api/products/{id}` | Update existing product |
-| DELETE | `/api/products/{id}` | Delete product |
+**Category Service**
+| Method | Description | Returns |
+|---------|-------------|---------|
+| `getAll()` | List all categories | Promise<Category[]> |
+| `getBySlug(slug)` | Get category by slug | Promise<Category> |
+
+**Auth Service**
+| Method | Description | Returns |
+|---------|-------------|---------|
+| `login(credentials)` | User authentication | Promise<{token, user}> |
+| `logout()` | Clear authentication | Promise<void> |
+
+### Local Data Management
+- **localStorage Integration** - Persistent data storage
+- **Auto-initialization** - Seeds default data on first load
+- **Real-time Updates** - Category counts update automatically
+- **Search & Filter** - Client-side product filtering
 
 ---
 
 ## 🛠️ Technology Stack
 
-### Backend (Laravel 12)
-- **Framework**: Laravel 12
-- **Authentication**: Laravel Sanctum
-- **Database**: SQLite (development)
-- **API**: RESTful JSON API
-- **Validation**: Form Requests
-- **Resources**: API Resource Classes
-
 ### Frontend (React 19)
-- **Framework**: React 19
-- **Routing**: React Router v6
-- **Styling**: Tailwind CSS v4
-- **HTTP Client**: Axios
-- **Icons**: Lucide React
-- **Build Tool**: Vite
-- **State Management**: React Context + localStorage
+- **Framework**: React 19 with modern hooks
+- **Routing**: React Router v6 for SPA navigation
+- **Styling**: Tailwind CSS v4 with dark mode support
+- **State Management**: React Context API
+  - AuthContext for user authentication
+  - CartContext for shopping cart state
+  - ThemeContext for dark mode
+- **HTTP Client**: Axios for API communication
+- **Icons**: Lucide React icon library
+- **Build Tool**: Vite for fast development and building
+- **Data Storage**: localStorage for persistence
+- **Notifications**: Custom Toast component system
+- **Form Validation**: Client-side validation with error handling
 
 ---
 
 ## 📦 Dependencies
-
-### Backend
-```json
-{
-  "laravel/framework": "^12.0",
-  "laravel/sanctum": "^4.0",
-  "laravel/tinker": "^2.10.1"
-}
-```
 
 ### Frontend
 ```json
@@ -185,56 +183,27 @@ finial project (laravel & react)/
 }
 ```
 
+### Dev Dependencies
+```json
+{
+  "@eslint/js": "^9.39.1",
+  "@types/react": "^19.2.5",
+  "@types/react-dom": "^19.2.3",
+  "@vitejs/plugin-react": "^5.1.1",
+  "@tailwindcss/postcss": "^4.0.0",
+  "@tailwindcss/vite": "^4.0.0",
+  "eslint": "^9.39.1",
+  "postcss": "^8.4.35"
+}
+```
+
 ---
 
 ## 🚀 Setup Instructions
 
 ### Prerequisites
-- PHP 8.2+
-- Composer
 - Node.js 18+
-- npm
-
-### Backend Setup
-
-1. **Navigate to backend directory**:
-   ```bash
-   cd backend
-   ```
-
-2. **Install dependencies**:
-   ```bash
-   composer install
-   ```
-
-3. **Configure environment**:
-   ```bash
-   cp .env.example .env
-   php artisan key:generate
-   ```
-
-4. **Install Sanctum**:
-   ```bash
-   composer require laravel/sanctum
-   php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-   ```
-
-5. **Run migrations**:
-   ```bash
-   php artisan migrate
-   ```
-
-6. **Seed database**:
-   ```bash
-   php artisan db:seed
-   ```
-
-7. **Start server**:
-   ```bash
-   php artisan serve
-   ```
-
-   **API URL**: `http://localhost:8000/api`
+- npm or yarn or bun
 
 ### Frontend Setup
 
@@ -253,48 +222,59 @@ finial project (laravel & react)/
    npm run dev
    ```
 
-   **Frontend URL**: `http://localhost:5173`
+   **Application URL**: `http://localhost:5173`
+
+### Building for Production
+
+```bash
+npm run build
+```
+
+The production build will be in the `dist/` folder.
 
 ---
 
 ## 🔑 Default Credentials
 
-After running `php artisan db:seed`:
+The application initializes with default user data in localStorage:
 
 **Admin Account:**
 - Email: `admin@example.com`
 - Password: `password`
+
+You can also register new accounts through the registration page at `/register`.
 
 ---
 
 ## 🎯 Usage Guide
 
 ### Customer Flow
-1. Browse products on homepage
-2. Search or filter by category
-3. Click product for details
-4. Add to cart with quantity
-5. View cart and checkout
+1. Browse products on homepage with responsive grid
+2. Use search bar for real-time product search
+3. Filter products by category
+4. Click product for detailed view
+5. Add to cart with quantity selection
+6. View cart and manage items
+7. Register account or use guest checkout
+8. Contact support through contact form
 
 ### Admin Flow
-1. Login at `/admin/login`
-2. Access dashboard at `/admin`
-3. Manage products (CRUD operations)
-4. View categories and product counts
-5. Logout when done
+1. Register new admin account or use default credentials
+2. Login at `/admin/login`
+3. Access dashboard at `/admin`
+4. Manage products (Create, Read, Update, Delete)
+5. View categories with product counts
+6. Monitor user registrations
+7. Logout when done
+
+### Theme Customization
+- Toggle dark/light mode using theme switcher
+- Theme preference persists in localStorage
+- Respects system color scheme preference
 
 ---
 
 ## 🔄 Development Commands
-
-### Backend
-```bash
-php artisan serve              # Start development server
-php artisan migrate             # Run migrations
-php artisan db:seed            # Seed database
-php artisan route:list         # List all routes
-php artisan tinker             # Interactive shell
-```
 
 ### Frontend
 ```bash
@@ -304,84 +284,82 @@ npm run preview               # Preview production build
 npm run lint                  # Run ESLint
 ```
 
+### Available Scripts
+- `npm run dev` - Starts Vite development server with hot reload
+- `npm run build` - Creates optimized production build
+- `npm run preview` - Serves the production build locally
+- `npm run lint` - Runs ESLint for code quality checks
+
 ---
 
 ## 🎨 UI/UX Features
 
-- **Responsive Design** - Mobile-first approach
-- **Modern UI** - Clean, minimalist design
-- **Loading States** - Skeleton loaders and spinners
-- **Error Handling** - User-friendly error messages
-- **Form Validation** - Real-time validation feedback
-- **Hover Effects** - Interactive elements
+- **Responsive Design** - Mobile-first approach with breakpoint optimization
+- **Dark Mode Support** - System preference detection with manual toggle
+- **Modern UI** - Clean, minimalist design with Tailwind CSS
+- **Loading States** - Skeleton loaders and spinners for better UX
+- **Toast Notifications** - Non-intrusive feedback system
+- **Error Handling** - User-friendly error messages with validation
+- **Form Validation** - Real-time validation feedback with visual indicators
+- **Hover Effects** - Interactive elements with smooth transitions
 - **Accessibility** - Semantic HTML and ARIA labels
+- **Smooth Animations** - CSS transitions for enhanced user experience
 
 ---
 
 ## 🔒 Security Features
 
-- **API Authentication** - Sanctum token-based auth
-- **CORS Configuration** - Proper cross-origin handling
-- **Input Validation** - Form request validation
-- **SQL Injection Protection** - Eloquent ORM
-- **XSS Protection** - Laravel's built-in protection
-- **Password Hashing** - Bcrypt encryption
+- **Local Authentication** - Token-based authentication with localStorage
+- **Input Validation** - Client-side form validation with error handling
+- **XSS Protection** - React's built-in XSS protection
+- **Password Security** - Secure password handling (in production, use proper hashing)
+- **Route Protection** - Admin-only routes with authentication checks
+- **Data Validation** - Type checking and validation for all user inputs
 
 ---
 
 ## 📊 Performance Features
 
-- **API Pagination** - Efficient data loading
-- **Image Optimization** - Lazy loading
-- **Caching** - Browser caching headers
-- **Code Splitting** - Vite automatic splitting
+- **Local Storage Caching** - Instant data access without API calls
+- **Lazy Loading** - Components load only when needed
+- **Code Splitting** - Vite automatic code splitting for faster loads
 - **Minification** - Production build optimization
+- **Image Optimization** - Responsive images with proper sizing
+- **Search Optimization** - Client-side search with debouncing
+- **State Management** - Efficient React Context usage
 
----
-
-## 🧪 Testing
-
-### Backend Tests
-```bash
-php artisan test              # Run PHPUnit tests
-```
-
-### Frontend Tests
-```bash
-npm test                     # Run frontend tests (if configured)
-```
+### Manual Testing Checklist
+- **User Registration** - Test account creation with validation
+- **User Login** - Test authentication flow
+- **Product Management** - Test CRUD operations
+- **Cart Functionality** - Test add/update/remove items
+- **Search & Filter** - Test search and category filtering
+- **Theme Toggle** - Test dark/light mode switching
+- **Responsive Design** - Test on various screen sizes
+- **Form Validation** - Test all form validations
 
 ---
 
 ## 🚀 Production Deployment
 
-### Backend
-1. Configure production `.env`
-2. Run `php artisan config:cache`
-3. Run `php artisan route:cache`
-4. Set up web server (Apache/Nginx)
-5. Configure SSL certificate
+### Static Site Deployment
+Since this is a frontend-only application, you can deploy it to any static hosting service:
 
-### Frontend
-1. Run `npm run build`
-2. Deploy `dist/` folder to web server
-3. Configure web server for SPA routing
+1. **Build for Production**:
+   ```bash
+   npm run build
+   ```
 
----
+2. **Deploy to Static Hosting**:
+   - **Netlify**: Drag and drop the `dist/` folder
+   - **Vercel**: Connect your repository and auto-deploy
+   - **GitHub Pages**: Use `gh-pages` branch
+   - **AWS S3**: Upload `dist/` folder to S3 bucket
+   - **Firebase Hosting**: Deploy with `firebase deploy`
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch
-3. Make your changes
-4. Add tests if applicable
-5. Submit pull request
-
----
-
-## 📄 License
-
-This project is open-source and available under the MIT License.
+3. **Configure SPA Routing**:
+   - Ensure all routes redirect to `index.html`
+   - Configure 404 handling for client-side routing
 
 ---
 
@@ -397,13 +375,22 @@ For issues and questions:
 
 ## 🔄 Version History
 
-- **v1.0.0** - Initial release with full e-commerce functionality
+- **v2.0.0** - React Frontend with Local Storage (Current)
+  - Complete frontend rewrite with React 19
+  - Local storage data persistence
+  - Dark mode support with ThemeContext
+  - User registration and authentication system
+  - Toast notification system
+  - Contact Us and About Us pages
+  - Enhanced UI with Tailwind CSS v4
+  - Mobile-responsive design
+  - Real-time search and filtering
+
+- **v1.0.0** - Initial Laravel & React Setup
+  - Basic Laravel backend API
+  - React frontend with basic functionality
   - Product management
   - Shopping cart
   - Admin authentication
-  - Responsive UI
-  - API integration
 
 ---
-
-*Last Updated: March 2024*
