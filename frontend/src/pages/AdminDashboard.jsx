@@ -112,7 +112,13 @@ function AdminDashboard() {
     };
 
     const generateSlug = (name) => {
-        return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        return name
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
+            .replace(/\s+/g, '-') // Replace spaces with hyphens
+            .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+            .replace(/^-|-$/g, ''); // Remove hyphens from start and end
     };
 
     return (
@@ -161,7 +167,15 @@ function AdminDashboard() {
                         <button
                             onClick={() => {
                                 setEditingProduct(null);
-                                setFormData({ name: '', slug: '', description: '', price: '', stock: '', category_id: '' });
+                                setFormData({
+                                    name: '',
+                                    slug: '',
+                                    description: '',
+                                    price: '',
+                                    stock: '',
+                                    category_id: '',
+                                    image: ''
+                                });
                                 setShowForm(true);
                             }}
                             className="flex items-center space-x-2 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors"
@@ -189,7 +203,7 @@ function AdminDashboard() {
                                                 setFormData({
                                                     ...formData,
                                                     name,
-                                                    slug: editingProduct ? formData.slug : generateSlug(name),
+                                                    slug: generateSlug(name),
                                                 });
                                             }}
                                             required
@@ -203,9 +217,10 @@ function AdminDashboard() {
                                             type="text"
                                             value={formData.slug}
                                             onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
-                                            required
-                                            className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white transition-colors"
+                                            placeholder="Auto-generated from name"
+                                            className="w-full px-3 py-2 border border-gray-300 dark:border-slate-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none bg-white dark:bg-slate-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-slate-400 transition-colors"
                                         />
+                                        <p className="text-xs text-gray-500 dark:text-slate-400 mt-1">Auto-generated from product name (can be edited)</p>
                                     </div>
 
                                     <div>
